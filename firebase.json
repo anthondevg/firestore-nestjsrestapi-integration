@@ -1,0 +1,24 @@
+{
+  "functions": [
+    {
+      "source": ".",
+      "predeploy": ["npm --prefix \"$RESOURCE_DIR\" run build"],
+      "runtime": "nodejs18"
+    }
+  ],
+  "emulators": {
+    "functions": {
+      "port": 5623
+    },
+    "ui": {
+      "enabled": true
+    },
+    "singleProjectMode": true,
+    "firestore": {
+      "port": 8655
+    },
+    "database": {
+      "port": 9299
+    }
+  }
+}

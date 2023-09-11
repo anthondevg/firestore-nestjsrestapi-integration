@@ -12,7 +12,11 @@ export class CandidatesService {
   }
 
   async findAll(firestoreDb: any) {
-    const candidatesRef = await firestoreDb.collection('candidates').get();
+    const candidatesRef = await firestoreDb
+      .collection('candidates')
+      .orderBy('name', 'desc')
+      .limit(10)
+      .get();
     return candidatesRef.docs.map((doc) => doc.data());
   }
 

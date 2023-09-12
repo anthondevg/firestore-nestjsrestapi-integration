@@ -26,20 +26,23 @@ export class CandidatesController {
   constructor(
     private readonly candidatesService: CandidatesService,
     private firebase: FirebaseService,
+    private db: FirebaseService,
   ) {
     this.firebase.connect();
+    this.firebase.getFirestore();
   }
 
   @Post()
   create(@Body() createCandidateDto: CreateCandidateDto) {
-    const db = this.firebase.getFirestore();
-    return this.candidatesService.create(createCandidateDto, db);
+    return this.candidatesService.create(
+      createCandidateDto,
+      this.firebase.getFirestore(),
+    );
   }
 
   @Get()
   async findAll() {
-    const db = this.firebase.getFirestore();
-    return this.candidatesService.findAll(db);
+    return this.candidatesService.findAll(this.firebase.getFirestore());
   }
 
   @Get(':id')
@@ -72,7 +75,6 @@ export class CandidatesController {
         parent: client.locationPath(projectId, location),
       });
       for (const workflow of workflows) {
-        console.log(workflow);
         console.info(`name: ${workflow.name}`);
       }
     }
